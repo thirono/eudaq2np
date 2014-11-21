@@ -1,7 +1,7 @@
 eudaq2np
 =======================
 
-A simple script to get converterd DUT data from EUDAQ to python.
+A simple script to convertert DUT data from EUDAQ to python.
  
 # Installation
 

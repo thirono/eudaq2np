@@ -5,17 +5,19 @@ A simple script to convertert DUT data from EUDAQ to python.
  
 # Installation
 
+setup env:
 ```bash
-CFLAGS="-I${EUDAQ_DIR}/main/include" \
-LDFLAGS="-L${EUDAQ_DIR}/build/main/lib" \
+export CFLAGS="-I${EUDAQ_DIR}/main/include" 
+export LDFLAGS="-L${EUDAQ_DIR}/build/main/lib"
+```
+
+install:
+```bash
 python setup.py install
 ```
 
 or for developemnt
-
 ```bash
-CFLAGS="-I${EUDAQ_DIR}/main/include" \
-LDFLAGS="-L${EUDAQ_DIR}/build/main/lib" \
 python setup.py develop
 ```
 

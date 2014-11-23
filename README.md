@@ -16,7 +16,7 @@ install:
 python setup.py install
 ```
 
-or for developemnt
+or develop:
 ```bash
 python setup.py develop
 ```

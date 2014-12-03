@@ -1,6 +1,8 @@
 #include <stdio.h>
 
-struct data_row {
+#pragma pack(push, 1)
+
+/*struct data_row {
   uint32_t tluevent;
   uint32_t plane;
   uint32_t frame;
@@ -9,5 +11,16 @@ struct data_row {
   double y;
   double val;
 };
+*/
 
-void eudaq_data_vector(const std::string & file_name, const std::string & type, std::vector<data_row> &);
+struct data_row {
+  uint32_t tluevent;
+  uint16_t plane;
+  uint16_t frame;
+  uint16_t x;
+  uint16_t y;
+  uint16_t val;
+};
+
+void eudaq_data_map(const std::string & filename, std::map<std::string, std::vector<data_row> > & data_map);
+

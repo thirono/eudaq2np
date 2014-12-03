@@ -4,6 +4,7 @@ cimport numpy as np
 
 from libcpp.string cimport string as std_string
 from libcpp.vector cimport vector as std_vector
+from libcpp.map cimport map as std_map
 
 np.import_array()  # if array is used it has to be imported, otherwise possible runtime error
 
@@ -12,28 +13,33 @@ ctypedef np.int8_t DTYPE_t
 
 cdef extern from "lib/cfunc.h":
 
-    void eudaq_data_vector(const std_string & filename, const std_string & type, std_vector[data_row] & data)
+    void eudaq_data_map(const std_string & filename, std_map[std_string, std_vector[data_row]] & data)
 
     struct data_row:
         np.uint32_t tluevent
-        np.uint32_t plane
-        np.uint32_t frame
-        np.uint32_t id
-        np.float64_t x
-        np.float64_t y
-        np.float64_t val
+        np.uint16_t plane
+        np.uint16_t frame
+        np.uint16_t x
+        np.uint16_t y
+        np.uint16_t val
 
-cdef dt = np.dtype([('tluevent', '<u4'), ('plane', '<u4'), ('frame', '<u4'), ('id', '<u4'), ('x', '<f8'), ('y', '<f8'), ('val', '<f8')]) 
+cdef eudaq_dt = np.dtype([('tluevent', '<u4'), ('plane', '<u2'), ('frame', '<u2'), ('x', '<u2'), ('y', '<u2'), ('val', '<u2')]) 
 
-def data_np(filename, type):
+def data_np(filename):
+    
+    cdef std_map[std_string, std_vector[data_row]] data
 
-    cdef std_vector[data_row] vect
+    eudaq_data_map(<const std_string &> filename , <std_map[std_string, std_vector[data_row]] &> data)
 
-    eudaq_data_vector(<const std_string &> filename ,<const std_string &> type, <std_vector[data_row] &> vect)
+    ret = dict() 
+    cdef std_map[std_string, std_vector[data_row]].iterator iter = data.begin()    
+    while iter != data.end():
+        arr = data_to_numpy_array_with_spec(&cython.operator.dereference(iter).second[0], cython.operator.dereference(iter).second.size() * sizeof(data_row), np.NPY_INT8)        
+        ret[cython.operator.dereference(iter).first] = arr.copy().view(eudaq_dt)
+        cython.operator.preincrement(iter)
 
-    arr = data_to_numpy_array_with_spec(&vect[0], vect.size() * sizeof(data_row), np.NPY_INT8)
+    return ret
 
-    return arr.copy().view(dt) # should be way to do it without copy
 
 #cdef extern from "numpy/arrayobject.h":
 #    void PyArray_ENABLEFLAGS(np.ndarray arr, int flags)

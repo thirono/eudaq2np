@@ -1,4 +1,7 @@
 #include <stdio.h>
+#ifdef WIN32
+#include <stdint.h>
+#endif
 
 struct data_row {
   uint32_t tluevent;

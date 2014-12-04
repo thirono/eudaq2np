@@ -21,6 +21,13 @@ or develop:
 python setup.py develop
 ```
 
+# Installation (Windows)
+```bash
+cp #setup.cfg# setup.cfg
+set SET VS90COMNTOOLS=%VS120COMNTOOLS%
+python setup.py develop
+```
+
 # Example usage 
 
 Setup path to libEUDAQ.so:

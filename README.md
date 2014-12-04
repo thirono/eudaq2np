@@ -21,6 +21,19 @@ or develop:
 python setup.py develop
 ```
 
+# Installation (Windows)
+* change #setup.cfg# to setup.cfg
+* edit (path to python)\Lib\distutils\msvc9compiler.py (not recommended but how?)
+```python
+383  plat_spec="x86_amd64"
+```
+* with command prompt,
+```bash
+set SET VS90COMNTOOLS=%VS120COMNTOOLS%
+python setup.py develop
+```
+* add EUDAQ_DIR/bin to PATH
+
 # Example usage 
 
 Setup path to libEUDAQ.so:

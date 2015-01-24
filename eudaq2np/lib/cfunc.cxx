@@ -19,8 +19,6 @@ using namespace eudaq;
 
 void eudaq_data_map(const std::string & filename, unsigned int begin, unsigned int end, std::map<std::string, std::vector<data_row> > & data_map)
 {
-  std::cout<<"end"<<end<< (end>100) <<std::endl;
-
   // Create a reader for this iframele
   eudaq::FileReader reader(filename);
 

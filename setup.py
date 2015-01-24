@@ -4,7 +4,7 @@ import numpy as np
 import os,sys
 
 NAME = "eudaq2np"
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 DESCR = "A simle script to get data from EUDAQ"
 URL = "https://github.com/SiLab-Bonn/eudaq2np"
 REQUIRES = ['numpy', 'cython']

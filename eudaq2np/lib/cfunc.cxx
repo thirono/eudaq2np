@@ -66,7 +66,7 @@ void eudaq_data_map(const std::string & filename, unsigned int begin, unsigned i
       } catch (const eudaq::Exception & e) {
         //std::cout << "No " << type << " subevent in event "  << reader.GetDetectorEvent().GetEventNumber() << std::endl;
       }
-    }
+  }
 }
 
 

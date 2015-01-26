@@ -13,9 +13,10 @@ ctypedef np.int8_t DTYPE_t
 
 cdef extern from "lib/cfunc.h":
 
-    void eudaq_data_map(const std_string & filename, std_map[std_string, std_vector[data_row]] & data)
+    void eudaq_data_map(const std_string & filename, unsigned int begin, unsigned int end, std_map[std_string, std_vector[data_row]] & data)
 
     struct data_row:
+        np.uint32_t eventnumber
         np.uint32_t tluevent
         np.uint16_t plane
         np.uint16_t frame
@@ -23,13 +24,12 @@ cdef extern from "lib/cfunc.h":
         np.uint16_t y
         np.uint16_t val
 
-cdef eudaq_dt = np.dtype([('tluevent', '<u4'), ('plane', '<u2'), ('frame', '<u2'), ('x', '<u2'), ('y', '<u2'), ('val', '<u2')]) 
+cdef eudaq_dt = np.dtype([('eventnumber', '<u4'), ('tluevent', '<u4'), ('plane', '<u2'), ('frame', '<u2'), ('x', '<u2'), ('y', '<u2'), ('val', '<u2')]) 
 
-def data_np(filename):
+def data_np(filename,begin=0,end=4294967295):
     
     cdef std_map[std_string, std_vector[data_row]] data
-
-    eudaq_data_map(<const std_string &> filename , <std_map[std_string, std_vector[data_row]] &> data)
+    eudaq_data_map(<const std_string &> filename, <unsigned int> begin, <unsigned int> end, <std_map[std_string, std_vector[data_row]] &> data)
 
     ret = dict() 
     cdef std_map[std_string, std_vector[data_row]].iterator iter = data.begin()    
